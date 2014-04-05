@@ -1,0 +1,41 @@
+package com.pseudocoloring.processing;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+public class ImageProcessing {
+
+	public BufferedImage processImage(String imageName) throws IOException{
+		
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream inputStream = classloader.getResourceAsStream("Images/"+ imageName + ".jpg");
+		BufferedImage image = ImageIO.read(inputStream);
+		
+		for (int y = 0; y < image.getHeight(); y++) {
+		    for (int x = 0; x < image.getWidth(); x++) {
+		          int  clr   = image.getRGB(x, y); 
+		          int  red   = (clr & 0x00ff0000) >> 16;
+		          int  green = (clr & 0x0000ff00) >> 8;
+		          int  blue  =  clr & 0x000000ff;
+		          		          
+		          if(red>200){
+		        	  Color color = new Color(red, 0, 0);
+		        	  int rgb = color.getRGB(); 
+		        	  
+		        	  image.setRGB(x, y, rgb);
+		          } else {
+		        	  image.setRGB(x, y, clr);
+		          }
+		          
+		          System.out.println(red+"-"+green+"-"+blue);
+		          
+		    }
+		}
+		
+		return image;
+	}
+}

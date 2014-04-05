@@ -1,0 +1,15 @@
+package com.pseudocoloring.panel;
+
+
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JPanel;
+
+public class MainPanel extends JPanel{
+
+	public MainPanel() {
+		this.setLayout(new GridLayout(1, 2));
+		this.setBackground(Color.WHITE);
+	}
+}

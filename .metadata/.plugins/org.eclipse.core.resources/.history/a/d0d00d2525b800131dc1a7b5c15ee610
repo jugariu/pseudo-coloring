@@ -1,0 +1,37 @@
+package com.pseudocoloring.panel;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import com.pseudocoloring.processing.ImageProcessing;
+
+public class ImagePanel extends JPanel {
+
+	private BufferedImage image;
+
+	public ImagePanel(String imageName) {
+		try {
+			
+			ImageProcessing imageProcessing = new ImageProcessing();
+			image = imageProcessing.processImage(imageName);
+			
+//			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+//			InputStream is = classloader.getResourceAsStream("Images/"+ imageName + ".jpg");
+//			image = ImageIO.read(is);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
+	}
+
+}

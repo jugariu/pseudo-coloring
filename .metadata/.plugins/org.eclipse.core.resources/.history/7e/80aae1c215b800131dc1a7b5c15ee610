@@ -1,0 +1,17 @@
+package com.pseudocoloring.processing;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.imageio.ImageIO;
+
+public class ImageProcessing {
+
+	public BufferedImage processImage(String imageName) throws IOException{
+		
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		InputStream inputStream = classloader.getResourceAsStream("Images/"+ imageName + ".jpg");
+		BufferedImage image = ImageIO.read(inputStream);
+	}
+}

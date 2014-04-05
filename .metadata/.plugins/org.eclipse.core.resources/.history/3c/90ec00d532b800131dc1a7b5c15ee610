@@ -1,0 +1,78 @@
+package com.pseudocoloring.gui.menu;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class Menu extends JMenuBar{
+
+	private final static String C_PATH = "C:\\";
+	private final static String FILE_CHOOSER_NAME ="Select DIICOM";
+	
+	private String selectedFile;
+
+	public Menu() {
+		JMenu fileMenu = new JMenu("File");
+		fileMenu.add(createOpenMenuItem());
+		fileMenu.addSeparator();
+		fileMenu.add(createExitMenuItem());
+		this.add(fileMenu);
+	}
+	
+	private JMenuItem createExitMenuItem(){
+		JMenuItem menuItem = new JMenuItem("Exit");
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		return menuItem;
+	}
+	
+	private JMenuItem createOpenMenuItem(){
+		JMenuItem menuItem = new JMenuItem("Open");
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				openFileChooser();
+			}
+		});
+		
+		return menuItem;
+	}
+	
+	private void openFileChooser(){
+		JFileChooser fileChooser = new JFileChooser();
+		FileFilter jpegFilter = new FileNameExtensionFilter("JPEG File","jpg");
+		FileFilter diicomFilter = new FileNameExtensionFilter("DIICOM File","diicom");
+		
+		fileChooser.setCurrentDirectory(new File("C:\\"));
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fileChooser.addChoosableFileFilter(jpegFilter);
+		fileChooser.addChoosableFileFilter(diicomFilter);
+		
+		if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
+			setSelectedFile(fileChooser.getSelectedFile().getPath());
+		}
+	}
+	
+	public String getSelectedFile() {
+		return selectedFile;
+	}
+
+	public void setSelectedFile(String selectedFile) {
+		this.selectedFile = selectedFile;
+	}
+}

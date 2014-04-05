@@ -1,0 +1,12 @@
+package com.pseudocoloring.gui.frame;
+
+import java.io.File;
+
+import javax.swing.JFrame;
+
+public class ImageFrame extends JFrame{
+
+	public ImageFrame(String fileName) {
+		File file = new File(fileName);
+	}
+}

@@ -1,0 +1,15 @@
+package com.pseudocoloring.lut;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.net.URL;
+
+public class LUTReader {
+	
+	public LUTReader(String lutFile){
+		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+		URL url = classloader.getResource("luts/"+ lutFile + ".lut");
+		BufferedReader br = new BufferedReader(new FileReader(url.toString()));
+	}
+}
