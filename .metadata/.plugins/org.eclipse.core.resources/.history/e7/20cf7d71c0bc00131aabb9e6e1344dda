@@ -91,7 +91,7 @@ public class Menu extends JMenuBar{
 			
 			public void actionPerformed(ActionEvent e) {
 				SaltAndPepper saltAndPapper = new SaltAndPepper(getBufferedImage());
-				BufferedImage grayscaledImage = saltAndPapper.removeSaltAndPepperNoise();
+				BufferedImage grayscaledImage = saltAndPapper.removeSaltAndPaperNoise();
 				new ImageFrame(grayscaledImage);
 			}
 		});
