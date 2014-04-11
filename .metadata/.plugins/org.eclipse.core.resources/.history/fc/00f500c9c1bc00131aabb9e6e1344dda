@@ -1,0 +1,47 @@
+package com.pseudocoloring.processing.filters;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+public class SaltAndPepper {
+
+	private BufferedImage image;
+
+	public SaltAndPepper(BufferedImage image) {
+		this.image = image;
+	}
+
+	public BufferedImage removeSaltAndPepperNoise() {System.out.println("Intra");
+		for (int y = 1; y < image.getHeight() - 1; y++) {
+			for (int x = 1; x < image.getWidth() - 1; x++) {
+				int center = image.getRGB(x, y);
+				int centerColor = (center & 0x00ff0000) >> 16;
+
+				System.out.println(centerColor);
+			
+				if (centerColor > 200 && centerColor < 50) {
+					int left = image.getRGB(x - 1, y);
+					int right = image.getRGB(x + 1, y);
+					int down = image.getRGB(x, y + 1);
+					int up = image.getRGB(x, y - 1);
+
+					int leftColor = (left & 0x00ff0000) >> 16;
+					int rightColor = (right & 0x00ff0000) >> 16;
+					int downColor = (down & 0x00ff0000) >> 16;
+					int upColor = (up & 0x00ff0000) >> 16;
+
+					int value = (leftColor + rightColor + upColor + downColor) / 4;
+					Color color = new Color(value, value, value);
+					int rgb = color.getRGB();
+
+					image.setRGB(x, y, rgb);
+				} else {
+					image.setRGB(x, y, center);
+				}
+
+			}
+		}
+
+		return image;
+	}
+}
