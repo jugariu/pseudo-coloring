@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.pseudocoloring.gui.frame.ImageFrame;
 import com.pseudocoloring.gui.frame.MainFrame;
+import com.pseudocoloring.lut.SevenRampsLUT;
 import com.pseudocoloring.processing.filters.GrayScale;
 import com.pseudocoloring.processing.filters.SaltAndPepper;
 
@@ -90,9 +91,13 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				SaltAndPepper saltAndPapper = new SaltAndPepper(getBufferedImage());
-				BufferedImage grayscaledImage = saltAndPapper.removeSaltAndPepperNoise();
-				new ImageFrame(grayscaledImage);
+//				SaltAndPepper saltAndPapper = new SaltAndPepper(getBufferedImage());
+//				BufferedImage grayscaledImage = saltAndPapper.removeSaltAndPepperNoise();
+//				new ImageFrame(grayscaledImage);
+				
+				SevenRampsLUT lut = new SevenRampsLUT(getBufferedImage());
+				BufferedImage lutBI = lut.getSevenRampsLUTImage();
+				new ImageFrame(lutBI);
 			}
 		});
 		
