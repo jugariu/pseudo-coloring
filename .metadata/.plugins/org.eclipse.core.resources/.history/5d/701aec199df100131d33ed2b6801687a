@@ -1,0 +1,14 @@
+package com.pseudocoloring.application;
+
+import java.io.IOException;
+import java.util.ResourceBundle;
+
+import com.pseudocoloring.gui.frame.MainFrame;
+
+public class PseudocoloringApplication {
+	
+	public static void main(String[] args) throws IOException{
+		
+		new MainFrame();
+	}
+}

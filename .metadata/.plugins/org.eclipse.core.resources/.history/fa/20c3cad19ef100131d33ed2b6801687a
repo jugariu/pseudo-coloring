@@ -1,0 +1,10 @@
+package com.pseudocoloring.gui.logger;
+
+import javax.swing.JTextArea;
+
+public class LogArea extends JTextArea{
+
+	public LogArea() {
+		this.setBounds(0, 0, 1024, 768);
+	}
+}

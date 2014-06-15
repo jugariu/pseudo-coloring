@@ -1,0 +1,45 @@
+package com.pseudocoloring.gui.panel;
+
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import com.pseudocoloring.gui.logger.ScrollableLogArea;
+
+public class ImagePanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
+	private JLabel label;
+	private ScrollableLogArea log;
+
+	public ImagePanel(int xStart, int yStart, ScrollableLogArea log) throws IOException {
+		this.log = log;
+		label = new JLabel();
+		log.setLoggedClass(ImagePanel.class.getName());
+		
+		initializeUI(xStart, yStart);
+	}
+	
+	private void initializeUI(int xStart, int yStart) throws IOException{
+		this.add(label);
+		if(image==null){
+			ImageIcon icon = new ImageIcon(ClassLoader.class.getResource("/Images/no_image.jpg").getFile().substring(1));
+			label.setIcon(icon);
+		}
+		this.setBounds(xStart, yStart, 500, 500);
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(String imagePath) {
+		this.setVisible(false);
+		ImageIcon icon = new ImageIcon(imagePath);
+		label.setIcon(icon);		
+		this.setVisible(true);		
+	}
+}
