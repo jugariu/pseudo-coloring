@@ -1,0 +1,16 @@
+package com.pseudocoloring.gui.logger;
+
+import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+
+public class LogArea extends JTextPane{
+
+	public LogArea() {
+		this.setBounds(0, 520, 1024, 200);
+	}
+	
+	public void info(String message){
+		this.append(str);
+		this.append(str);
+	}
+}

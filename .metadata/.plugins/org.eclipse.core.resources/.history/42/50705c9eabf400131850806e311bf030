@@ -1,0 +1,55 @@
+package com.pseudocoloring.gui.panel;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+import com.pseudocoloring.gui.logger.ScrollableLogArea;
+
+public class ImagePanel extends JPanel {
+	private static final long serialVersionUID = 1L;
+	
+	private BufferedImage image;
+	private ScrollableLogArea log;
+
+	public ImagePanel(int xStart, int yStart, ScrollableLogArea log) throws IOException {
+		this.log = log;
+		log.setLoggedClass(ImagePanel.class.getName());
+		
+		initializeUI(xStart, yStart);
+	}
+	
+	private void initializeUI(int xStart, int yStart) throws IOException{
+		if(image==null){
+			try {
+				File file = new File(ClassLoader.class.getResource("/Images/no_image.jpg").getFile().substring(1));
+				image = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+				image = ImageIO.read(file);
+			} catch (IOException ioe) {
+				log.error("Could not load the image panel.", ioe.getMessage());
+				throw ioe;
+			}
+		}
+		this.setBounds(xStart, yStart, 500, 500);
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(image, 0, 0, 500, 500, null);
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.setVisible(false);
+		this.image = image;
+		this.setVisible(true);		
+	}
+}

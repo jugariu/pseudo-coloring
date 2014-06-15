@@ -1,0 +1,33 @@
+package com.pseudocoloring.gui.logger;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class ScrollableLogArea extends JPanel{
+	private static final long serialVersionUID = 1L;
+	
+	private LogArea logArea;
+	
+	public ScrollableLogArea() {
+		logArea = new LogArea();
+		this.add(logArea);
+		initializeUI();
+	}
+
+	private void initializeUI(){
+		JScrollPane scrollPane = new JScrollPane(logArea);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVisible(true);
+		this.setBounds(0, 520, 1024, 200);
+		this.setVisible(true);
+	}
+	
+	public void error(String errorMessage){
+		logArea.error(errorMessage);
+	}
+	
+	public void info(String infoMessage){
+		logArea.info(infoMessage);
+	}
+}

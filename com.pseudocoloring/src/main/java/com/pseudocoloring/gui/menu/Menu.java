@@ -14,14 +14,15 @@ import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import com.pseudocoloring.gui.frame.ImageFrame;
-import com.pseudocoloring.gui.frame.MainFrame;
+import com.pseudocoloring.gui.logger.ScrollableLogArea;
+import com.pseudocoloring.gui.panel.ImagePanel;
 import com.pseudocoloring.lut.SevenRampsLUT;
 import com.pseudocoloring.processing.filters.GrayScale;
 import com.pseudocoloring.processing.filters.SaltAndPepper;
 
 public class Menu extends JMenuBar{
-
+	private static final long serialVersionUID = 1L;
+	
 	private final static String C_PATH = "C:\\";
 	private final static String FILE_CHOOSER_TITLE ="Select file";
 
@@ -32,10 +33,22 @@ public class Menu extends JMenuBar{
 	private final static String PROCESSING_MENU ="Processing";
 	private final static String GRAYSCALE ="Grayscale";
 	private final static String SALT_AND_PEPPER ="Salt&Pepper";
+	private final static String LUT_RAMPS ="7 LUT Ramps";
 	
-	private BufferedImage bufferedImage;
-
-	public Menu() {
+	private ImagePanel initialImagePanel;
+	private ImagePanel processedImagePanel;
+	private ScrollableLogArea log;
+	
+	public Menu(ImagePanel initialImagePanel, ImagePanel processedImagePanel, ScrollableLogArea log) {
+		super();
+		this.initialImagePanel = initialImagePanel;
+		this.processedImagePanel = processedImagePanel;
+		this.log = log;
+		
+		initializeUI();
+	}
+	
+	private void initializeUI(){
 		JMenu fileMenu = new JMenu(FILE_MENU);
 		fileMenu.add(createOpenMenuItem());
 		fileMenu.addSeparator();
@@ -45,6 +58,7 @@ public class Menu extends JMenuBar{
 		JMenu processingMenu = new JMenu(PROCESSING_MENU);
 		processingMenu.add(createGrayScaleMenu());
 		processingMenu.add(createSaltAndPepperMenu());
+		processingMenu.add(createSevenRampsLUTMenu());
 		this.add(processingMenu);
 	}
 	
@@ -77,33 +91,43 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				GrayScale grayscale = new GrayScale(getBufferedImage());
+				GrayScale grayscale = new GrayScale(getInitialImagePanel().getImage());
 				BufferedImage grayscaledImage = grayscale.getGrayScaleImage();
-				new ImageFrame(grayscaledImage);
+				getProcessedImagePanel().setImage(grayscaledImage);
 			}
 		});
 		
 		return menuItem;		
 	}
-	
+
 	private JMenuItem createSaltAndPepperMenu(){
 		JMenuItem menuItem = new JMenuItem(SALT_AND_PEPPER);
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-//				SaltAndPepper saltAndPapper = new SaltAndPepper(getBufferedImage());
-//				BufferedImage grayscaledImage = saltAndPapper.removeSaltAndPepperNoise();
-//				new ImageFrame(grayscaledImage);
-				
-				SevenRampsLUT lut = new SevenRampsLUT(getBufferedImage());
-				BufferedImage lutBI = lut.getSevenRampsLUTImage();
-				new ImageFrame(lutBI);
+				SaltAndPepper saltAndPapper = new SaltAndPepper(getInitialImagePanel().getImage());
+				BufferedImage saltAndPapperImage = saltAndPapper.removeSaltAndPepperNoise();
+				getProcessedImagePanel().setImage(saltAndPapperImage);
 			}
 		});
 		
 		return menuItem;		
 	}
-	
+
+	private JMenuItem createSevenRampsLUTMenu(){
+		JMenuItem menuItem = new JMenuItem(LUT_RAMPS);
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				SevenRampsLUT rampsLUT = new SevenRampsLUT(getInitialImagePanel().getImage(), log);
+				BufferedImage rampsLUTImage = rampsLUT.getSevenRampsLUTImage();
+				getProcessedImagePanel().setImage(rampsLUTImage);
+			}
+		});
+		
+		return menuItem;		
+	}
+
 	private void openFileChooser(){
 		JFileChooser fileChooser = new JFileChooser();
 		FileFilter jpegFilter = new FileNameExtensionFilter("JPEG File","jpg");
@@ -115,22 +139,24 @@ public class Menu extends JMenuBar{
 		
 		if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 			File file = new File(fileChooser.getSelectedFile().getPath());
-			BufferedImage bufferedImage = null;
-			try {
-				bufferedImage = ImageIO.read(file);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			setBufferedImage(bufferedImage);
-			new ImageFrame(getBufferedImage());
+			getInitialImagePanel().setImage(file.getPath());
+			log.info("Image " + file.getPath() + " was loaded.");
 		}
 	}
-
-	public BufferedImage getBufferedImage() {
-		return bufferedImage;
+	
+	public ImagePanel getProcessedImagePanel() {
+		return processedImagePanel;
 	}
 
-	public void setBufferedImage(BufferedImage bufferedImage) {
-		this.bufferedImage = bufferedImage;
+	public void setProcessedImagePanel(ImagePanel processedImagePanel) {
+		this.processedImagePanel = processedImagePanel;
+	}
+
+	public ImagePanel getInitialImagePanel() {
+		return initialImagePanel;
+	}
+
+	public void setInitialImagePanel(ImagePanel initialImagePanel) {
+		this.initialImagePanel = initialImagePanel;
 	}
 }

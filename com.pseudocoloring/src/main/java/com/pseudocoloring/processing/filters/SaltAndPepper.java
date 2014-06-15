@@ -2,13 +2,25 @@ package com.pseudocoloring.processing.filters;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class SaltAndPepper {
 
+	private String imagePath;
 	private BufferedImage image;
 
-	public SaltAndPepper(BufferedImage image) {
-		this.image = image;
+	public SaltAndPepper(String imagePath) {
+		this.imagePath = imagePath;
+		File file = new File(imagePath);
+		try {
+			image = ImageIO.read(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public BufferedImage removeSaltAndPepperNoise() {

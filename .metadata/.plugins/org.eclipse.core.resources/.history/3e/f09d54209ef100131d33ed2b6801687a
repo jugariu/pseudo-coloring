@@ -1,0 +1,22 @@
+package com.pseudocoloring.gui.panel;
+
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
+
+public class ImagePanel extends JPanel {
+
+	private BufferedImage image;
+
+	public ImagePanel(BufferedImage image, int xStart, int yStart) {
+		this.image = image;
+		this.setBounds(xStart, yStart, 500, 500);
+	}
+
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(image, 0, 0, null);
+	}
+
+}

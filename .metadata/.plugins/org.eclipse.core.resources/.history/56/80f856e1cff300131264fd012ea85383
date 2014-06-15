@@ -1,0 +1,19 @@
+package com.pseudocoloring.gui.logger;
+
+import javax.swing.JScrollPane;
+
+public class ScrollableLogArea extends JScrollPane{
+	private static final long serialVersionUID = 1L;
+	
+	private LogArea logArea;
+	
+	public ScrollableLogArea(LogArea logArea) {
+		super(logArea);
+		
+		
+	}
+
+	private void initializeUI(){
+		this.setbo
+	}
+}

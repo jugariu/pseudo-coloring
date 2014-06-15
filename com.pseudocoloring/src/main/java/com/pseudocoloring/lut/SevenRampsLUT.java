@@ -2,16 +2,39 @@ package com.pseudocoloring.lut;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import com.pseudocoloring.gui.logger.ScrollableLogArea;
 
 public class SevenRampsLUT {
 
+	private String imagePath;
 	private BufferedImage image;
+	private ScrollableLogArea log;
 
-	public SevenRampsLUT(BufferedImage image) {
-		this.image = image;
+	public SevenRampsLUT(String imagePath, ScrollableLogArea log) {
+		this.imagePath = imagePath;
+		this.log = log;
+		log.setLoggedClass(SevenRampsLUT.class.getName());
+		File file = null;
+		try {
+			file = new File(imagePath);
+			image = ImageIO.read(file);
+			log.info("Image " + file.getPath() + " is prepared for processing.");
+		} catch (NullPointerException npe) {
+			log.error("No image to process. ", npe.getMessage());
+			throw npe;
+		} catch (IOException ioe) {
+			log.error("Could not read image: " + file.getPath(), ioe.getMessage());
+		}
 	}
 
 	public BufferedImage getSevenRampsLUTImage() {
+		log.info("Seven Ramps LUT processing is started.");
+		
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {
 				int clr = image.getRGB(x, y);
@@ -55,6 +78,7 @@ public class SevenRampsLUT {
 			}
 		}
 
+		log.info("Seven Ramps LUT processing is finished.");
 		return image;
 	}
 }
