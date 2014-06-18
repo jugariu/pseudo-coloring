@@ -94,7 +94,7 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				GrayScale grayscale = new GrayScale(getInitialImagePanel().getImage());
+				GrayScale grayscale = new GrayScale(getInitialImagePanel().getImage(), log);
 				BufferedImage grayscaledImage = grayscale.getGrayScaleImage();
 				getProcessedImagePanel().setImage(grayscaledImage);
 			}
@@ -108,7 +108,7 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				SaltAndPepper saltAndPapper = new SaltAndPepper(getInitialImagePanel().getImage());
+				SaltAndPepper saltAndPapper = new SaltAndPepper(getInitialImagePanel().getImage(), log);
 				BufferedImage saltAndPapperImage = saltAndPapper.removeSaltAndPepperNoise();
 				getProcessedImagePanel().setImage(saltAndPapperImage);
 			}
@@ -136,7 +136,7 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				ContrastStretching contrastStretching = new ContrastStretching(getInitialImagePanel().getImage());
+				ContrastStretching contrastStretching = new ContrastStretching(getInitialImagePanel().getImage(), log);
 				BufferedImage contrastStretchingImage = contrastStretching.getContrastStretchingImage();
 				getProcessedImagePanel().setImage(contrastStretchingImage);
 			}
@@ -157,6 +157,7 @@ public class Menu extends JMenuBar{
 		if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
 			File file = new File(fileChooser.getSelectedFile().getPath());
 			getInitialImagePanel().setImage(file.getPath());
+			getProcessedImagePanel().reloadImagePanel();
 			log.info("Image " + file.getPath() + " was loaded.");
 		}
 	}
