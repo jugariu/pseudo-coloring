@@ -23,7 +23,7 @@ public class SevenRampsLUT {
 		try {
 			file = new File(imagePath);
 			image = ImageIO.read(file);
-			log.info("Image " + file.getPath() + " is prepared for processing.");
+			log.info("Image " + file.getPath() + " is prepared for Seven Ramps LUT processing.");
 		} catch (NullPointerException npe) {
 			log.error("No image to process. ", npe.getMessage());
 			throw npe;
@@ -33,7 +33,7 @@ public class SevenRampsLUT {
 	}
 
 	public BufferedImage getSevenRampsLUTImage() {
-		log.info("Seven Ramps LUT processing is started.");
+		log.info("Seven Ramps LUT processing has started.");
 		
 		for (int y = 0; y < image.getHeight(); y++) {
 			for (int x = 0; x < image.getWidth(); x++) {

@@ -54,6 +54,11 @@ public class ImagePanel extends JPanel {
 		this.setVisible(true);
 	}
 	
+	public void reloadImagePanel(){
+		ImageIcon icon = new ImageIcon(ClassLoader.class.getResource("/Images/no_image.jpg").getFile().substring(1));
+		label.setIcon(icon);
+	}
+	
 	private ImageIcon createImageIcon(ImageIcon icon){
 		Image img = icon.getImage() ;  
 		Image newimg = img.getScaledInstance( 500, 500,  java.awt.Image.SCALE_SMOOTH ) ;  
