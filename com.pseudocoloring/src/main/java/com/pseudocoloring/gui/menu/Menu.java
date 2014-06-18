@@ -17,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import com.pseudocoloring.gui.logger.ScrollableLogArea;
 import com.pseudocoloring.gui.panel.ImagePanel;
 import com.pseudocoloring.lut.SevenRampsLUT;
+import com.pseudocoloring.processing.filters.ContrastStretching;
 import com.pseudocoloring.processing.filters.GrayScale;
 import com.pseudocoloring.processing.filters.SaltAndPepper;
 
@@ -34,6 +35,7 @@ public class Menu extends JMenuBar{
 	private final static String GRAYSCALE ="Grayscale";
 	private final static String SALT_AND_PEPPER ="Salt&Pepper";
 	private final static String LUT_RAMPS ="7 LUT Ramps";
+	private final static String CONTRAST_STRETCHING ="Contrast Stretching";
 	
 	private ImagePanel initialImagePanel;
 	private ImagePanel processedImagePanel;
@@ -58,6 +60,7 @@ public class Menu extends JMenuBar{
 		JMenu processingMenu = new JMenu(PROCESSING_MENU);
 		processingMenu.add(createGrayScaleMenu());
 		processingMenu.add(createSaltAndPepperMenu());
+		processingMenu.add(createContrastStretchingMenu());
 		processingMenu.add(createSevenRampsLUTMenu());
 		this.add(processingMenu);
 	}
@@ -122,6 +125,20 @@ public class Menu extends JMenuBar{
 				SevenRampsLUT rampsLUT = new SevenRampsLUT(getInitialImagePanel().getImage(), log);
 				BufferedImage rampsLUTImage = rampsLUT.getSevenRampsLUTImage();
 				getProcessedImagePanel().setImage(rampsLUTImage);
+			}
+		});
+		
+		return menuItem;		
+	}
+
+	private JMenuItem createContrastStretchingMenu(){
+		JMenuItem menuItem = new JMenuItem(CONTRAST_STRETCHING);
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				ContrastStretching contrastStretching = new ContrastStretching(getInitialImagePanel().getImage());
+				BufferedImage contrastStretchingImage = contrastStretching.getContrastStretchingImage();
+				getProcessedImagePanel().setImage(contrastStretchingImage);
 			}
 		});
 		
