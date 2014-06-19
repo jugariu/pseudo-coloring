@@ -22,19 +22,19 @@ public class EqualizeProcess {
 		blueMap = new HashMap<String, Integer>();
 		greenMap = new HashMap<String, Integer>();
 
-		// BufferedImage image = imagePanel.getBufferedImage();
-		// for (int y = 0; y < image.getHeight(); y++) {
-		// for (int x = 0; x < image.getWidth(); x++) {
-		// int clr = image.getRGB(x, y);
-		// int red = (clr & 0x00ff0000) >> 16;
-		// int green = (clr & 0x0000ff00) >> 8;
-		// int blue = clr & 0x000000ff;
-		//
-		// redMap.put(y+"#"+x, red);
-		// greenMap.put(y+"#"+x, green);
-		// blueMap.put(y+"#"+x, blue);
-		// }
-		// }
+		BufferedImage image = imagePanel.getBufferedImage();
+		for (int y = 0; y < image.getHeight(); y++) {
+			for (int x = 0; x < image.getWidth(); x++) {
+				int clr = image.getRGB(x, y);
+				int red = (clr & 0x00ff0000) >> 16;
+				int green = (clr & 0x0000ff00) >> 8;
+				int blue = clr & 0x000000ff;
+
+				redMap.put(y + "#" + x, red);
+				greenMap.put(y + "#" + x, green);
+				blueMap.put(y + "#" + x, blue);
+			}
+		}
 	}
 
 	public void equalizeImageRedValue(int minValue, int maxValue) {
@@ -47,19 +47,9 @@ public class EqualizeProcess {
 				int blue = clr & 0x000000ff;
 
 				int equalizedValue = 0;
-				if (red >= minValue && red <= maxValue) {
-					equalizedValue = red;
-					if (redMap.containsKey(y + "#" + x)) {
-						redMap.remove(y + "#" + x);
-					} 
-				} else {
-					if (redMap.containsKey(y + "#" + x)) {
-						equalizedValue = redMap.get(y + "#" + x);
-						redMap.remove(y + "#" + x);
-					} else {
-						redMap.put(y + "#" + x, red);
-					}
-				}
+				if (redMap.get(y+"#"+x) >= minValue && redMap.get(y+"#"+x) <= maxValue) {
+					equalizedValue = redMap.get(y+"#"+x);
+				} 
 
 				Color color = new Color(equalizedValue, green, blue);
 				int rgb = color.getRGB();
@@ -80,14 +70,8 @@ public class EqualizeProcess {
 				int blue = clr & 0x000000ff;
 
 				int equalizedValue = 0;
-				if (green >= minValue && green <= maxValue) {
-					equalizedValue = green;
-					if (greenMap.containsKey(y + "#" + x)) {
-						equalizedValue = greenMap.get(y + "#" + x);
-						greenMap.remove(y + "#" + x);
-					}
-				} else {
-					greenMap.put(y + "#" + x, green);
+				if (greenMap.get(y+"#"+x) >= minValue && greenMap.get(y+"#"+x) <= maxValue) {
+					equalizedValue = greenMap.get(y+"#"+x);
 				}
 
 				Color color = new Color(red, equalizedValue, blue);
@@ -109,14 +93,8 @@ public class EqualizeProcess {
 				int blue = clr & 0x000000ff;
 
 				int equalizedValue = 0;
-				if (blue >= minValue && blue <= maxValue) {
-					equalizedValue = blue;
-					if (blueMap.containsKey(y + "#" + x)) {
-						equalizedValue = blueMap.get(y + "#" + x);
-						blueMap.remove(y + "#" + x);
-					}
-				} else {
-					blueMap.put(y + "#" + x, blue);
+				if (blueMap.get(y+"#"+x) >= minValue && blueMap.get(y+"#"+x) <= maxValue) {
+					equalizedValue = blueMap.get(y+"#"+x);
 				}
 
 				Color color = new Color(red, green, equalizedValue);
