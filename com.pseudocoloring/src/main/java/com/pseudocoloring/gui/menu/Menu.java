@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -16,6 +15,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.pseudocoloring.fusion.SelectMaximumImageFusion;
 import com.pseudocoloring.fusion.SimpleAverageImageFusion;
+import com.pseudocoloring.gui.frame.EqualizerFrame;
 import com.pseudocoloring.gui.logger.ScrollableLogArea;
 import com.pseudocoloring.gui.panel.ImagePanel;
 import com.pseudocoloring.lut.SevenRampsLUT;
@@ -32,6 +32,7 @@ public class Menu extends JMenuBar{
 	private final static String FILE_MENU ="File";
 	private final static String OPEN ="Open";
 	private final static String EXIT ="Exit";
+	private final static String EQUALIZER ="Equalizer";
 	
 	private final static String FILTERS_MENU ="Filters";
 	private final static String GRAYSCALE ="Grayscale";
@@ -60,6 +61,8 @@ public class Menu extends JMenuBar{
 		JMenu fileMenu = new JMenu(FILE_MENU);
 		fileMenu.add(createOpenMenuItem());
 		fileMenu.addSeparator();
+		fileMenu.add(createEqualizerMenuItem());
+		fileMenu.addSeparator();
 		fileMenu.add(createExitMenuItem());
 		this.add(fileMenu);	
 		
@@ -82,6 +85,18 @@ public class Menu extends JMenuBar{
 			
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
+			}
+		});
+		
+		return menuItem;
+	}
+	
+	private JMenuItem createEqualizerMenuItem(){
+		JMenuItem menuItem = new JMenuItem(EQUALIZER);
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				new EqualizerFrame(processedImagePanel);
 			}
 		});
 		

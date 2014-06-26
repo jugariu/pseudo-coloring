@@ -1,9 +1,6 @@
 package com.pseudocoloring.gui.panel;
 
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
-
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.pseudocoloring.gui.equalizer.components.SliderFilter;
@@ -15,6 +12,7 @@ public class EqualizerPanel extends JPanel{
 	private SliderFilter redFilter;
 	private SliderFilter greenFilter;
 	private SliderFilter blueFilter;
+	private JLabel redLabel, blueLabel, greenLabel;
 	
 	public EqualizerPanel(ImagePanel imagePanel) {
 		this.imagePanel = imagePanel;
@@ -24,6 +22,17 @@ public class EqualizerPanel extends JPanel{
 	
 	private void initializeUI(){
 		this.setLayout(null);
+		redLabel = new JLabel("RED");
+		greenLabel = new JLabel("GREEN");
+		blueLabel = new JLabel("BLUE");
+
+		redLabel.setBounds(10, -5, 50, 30);
+		greenLabel.setBounds(40, -5, 50, 30);
+		blueLabel.setBounds(90, -5, 50, 30);
+		this.add(redLabel);
+		this.add(greenLabel);
+		this.add(blueLabel);
+		
 		this.setVisible(true);
 	}
 	

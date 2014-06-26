@@ -1,7 +1,5 @@
 package com.pseudocoloring.gui.equalizer.components;
 
-import java.util.Map;
-
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
