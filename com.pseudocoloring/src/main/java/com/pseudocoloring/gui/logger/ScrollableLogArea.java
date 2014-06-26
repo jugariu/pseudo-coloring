@@ -14,7 +14,7 @@ public class ScrollableLogArea extends JScrollPane {
 	}
 
 	private void initializeUI() {
-		this.setBounds(0, 520, 1024, 200);
+		this.setBounds(0, 520, 1260, 200);
 		this.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		this.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		this.setVisible(true);
