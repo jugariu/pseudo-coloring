@@ -1,4 +1,4 @@
-package com.pseudocoloring.gui.equalizer.components;
+package com.pseudocoloring.gui.components;
 
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;

@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -18,6 +19,7 @@ import com.pseudocoloring.fusion.SimpleAverageImageFusion;
 import com.pseudocoloring.gui.frame.EqualizerFrame;
 import com.pseudocoloring.gui.logger.ScrollableLogArea;
 import com.pseudocoloring.gui.panel.ImagePanel;
+import com.pseudocoloring.gui.panel.IntermediatePanel;
 import com.pseudocoloring.lut.SevenRampsLUT;
 import com.pseudocoloring.processing.filters.ContrastStretching;
 import com.pseudocoloring.processing.filters.GrayScale;
@@ -46,12 +48,14 @@ public class Menu extends JMenuBar{
 	
 	private ImagePanel initialImagePanel;
 	private ImagePanel processedImagePanel;
+	private IntermediatePanel intermediatePanel;
 	private ScrollableLogArea log;
 	
-	public Menu(ImagePanel initialImagePanel, ImagePanel processedImagePanel, ScrollableLogArea log) {
+	public Menu(IntermediatePanel intermediatePanel, ImagePanel initialImagePanel, ImagePanel processedImagePanel, ScrollableLogArea log) {
 		super();
 		this.initialImagePanel = initialImagePanel;
 		this.processedImagePanel = processedImagePanel;
+		this.intermediatePanel = intermediatePanel;
 		this.log = log;
 		
 		initializeUI();
@@ -127,6 +131,7 @@ public class Menu extends JMenuBar{
 				GrayScale grayscale = new GrayScale(getInitialImagePanel().getImage(), log);
 				BufferedImage grayscaledImage = grayscale.getGrayScaleImage();
 				getProcessedImagePanel().setImage(grayscaledImage);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "Grayscale");
 			}
 		});
 		
@@ -141,6 +146,7 @@ public class Menu extends JMenuBar{
 				SaltAndPepper saltAndPapper = new SaltAndPepper(getInitialImagePanel().getImage(), log);
 				BufferedImage saltAndPapperImage = saltAndPapper.removeSaltAndPepperNoise();
 				getProcessedImagePanel().setImage(saltAndPapperImage);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "Salt and Pepper");
 			}
 		});
 		
@@ -155,6 +161,7 @@ public class Menu extends JMenuBar{
 				SevenRampsLUT rampsLUT = new SevenRampsLUT(getInitialImagePanel().getImage(), log);
 				BufferedImage rampsLUTImage = rampsLUT.getSevenRampsLUTImage();
 				getProcessedImagePanel().setImage(rampsLUTImage);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "7 Ramps LUT");
 			}
 		});
 		
@@ -169,6 +176,7 @@ public class Menu extends JMenuBar{
 				ContrastStretching contrastStretching = new ContrastStretching(getInitialImagePanel().getImage(), log);
 				BufferedImage contrastStretchingImage = contrastStretching.getContrastStretchingImage();
 				getProcessedImagePanel().setImage(contrastStretchingImage);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "Contrast Stretching");
 			}
 		});
 		
@@ -183,6 +191,7 @@ public class Menu extends JMenuBar{
 				SimpleAverageImageFusion imageFusion = new SimpleAverageImageFusion(getInitialImagePanel().getImage(), getProcessedImagePanel().getBufferedImage(), log);
 				BufferedImage imageFusionImg = imageFusion.getSimpleAverageImageFusion();
 				getProcessedImagePanel().setImage(imageFusionImg);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "Simple Average Image Fusion");
 			}
 		});
 		
@@ -197,6 +206,7 @@ public class Menu extends JMenuBar{
 				SelectMaximumImageFusion imageFusion = new SelectMaximumImageFusion(getInitialImagePanel().getImage(), getProcessedImagePanel().getBufferedImage(), log);
 				BufferedImage imageFusionImg = imageFusion.getSelectMaximumImageFusion();
 				getProcessedImagePanel().setImage(imageFusionImg);
+				intermediatePanel.addIntermediate(new ImageIcon(getProcessedImagePanel().getBufferedImage()), "Select Maximum Image Fusion");
 			}
 		});
 		

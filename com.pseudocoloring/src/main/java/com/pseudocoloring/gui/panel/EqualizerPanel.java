@@ -3,7 +3,7 @@ package com.pseudocoloring.gui.panel;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.pseudocoloring.gui.equalizer.components.SliderFilter;
+import com.pseudocoloring.gui.components.SliderFilter;
 
 public class EqualizerPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
