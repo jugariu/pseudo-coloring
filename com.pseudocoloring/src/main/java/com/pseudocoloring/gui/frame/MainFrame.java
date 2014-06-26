@@ -34,6 +34,7 @@ public class MainFrame extends JFrame {
 			this.add(initialImagePanel);
 			ImagePanel processedImagePanel = new ImagePanel(517, 0, log);
 			this.add(processedImagePanel);
+			new EqualizerFrame(processedImagePanel);
 			
 			Menu menu = new Menu(initialImagePanel, processedImagePanel, log);
 			this.setJMenuBar(menu);

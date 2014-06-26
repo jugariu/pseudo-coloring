@@ -14,6 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import com.pseudocoloring.fusion.SelectMaximumImageFusion;
+import com.pseudocoloring.fusion.SimpleAverageImageFusion;
 import com.pseudocoloring.gui.logger.ScrollableLogArea;
 import com.pseudocoloring.gui.panel.ImagePanel;
 import com.pseudocoloring.lut.SevenRampsLUT;
@@ -31,11 +33,15 @@ public class Menu extends JMenuBar{
 	private final static String OPEN ="Open";
 	private final static String EXIT ="Exit";
 	
-	private final static String PROCESSING_MENU ="Processing";
+	private final static String FILTERS_MENU ="Filters";
 	private final static String GRAYSCALE ="Grayscale";
 	private final static String SALT_AND_PEPPER ="Salt&Pepper";
 	private final static String LUT_RAMPS ="7 LUT Ramps";
 	private final static String CONTRAST_STRETCHING ="Contrast Stretching";
+
+	private final static String IMAGE_FUSION ="Image Fusion";
+	private final static String SIMPLE_AVERAGE ="Simple Average";
+	private final static String SELECT_MAXIMUM ="Select Maximum";
 	
 	private ImagePanel initialImagePanel;
 	private ImagePanel processedImagePanel;
@@ -57,12 +63,17 @@ public class Menu extends JMenuBar{
 		fileMenu.add(createExitMenuItem());
 		this.add(fileMenu);	
 		
-		JMenu processingMenu = new JMenu(PROCESSING_MENU);
+		JMenu processingMenu = new JMenu(FILTERS_MENU);
 		processingMenu.add(createGrayScaleMenu());
 		processingMenu.add(createSaltAndPepperMenu());
 		processingMenu.add(createContrastStretchingMenu());
 		processingMenu.add(createSevenRampsLUTMenu());
 		this.add(processingMenu);
+		
+		JMenu imageFusionMenu = new JMenu(IMAGE_FUSION);
+		imageFusionMenu.add(createSimpleAverageImageFusionMenu());
+		imageFusionMenu.add(createSelectMaximumImageFusionMenu());
+		this.add(imageFusionMenu);
 	}
 	
 	private JMenuItem createExitMenuItem(){
@@ -82,7 +93,11 @@ public class Menu extends JMenuBar{
 		menuItem.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				openFileChooser();
+				try {
+					openFileChooser();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -145,7 +160,35 @@ public class Menu extends JMenuBar{
 		return menuItem;		
 	}
 
-	private void openFileChooser(){
+	private JMenuItem createSimpleAverageImageFusionMenu(){
+		JMenuItem menuItem = new JMenuItem(SIMPLE_AVERAGE);
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				SimpleAverageImageFusion imageFusion = new SimpleAverageImageFusion(getInitialImagePanel().getImage(), getProcessedImagePanel().getBufferedImage(), log);
+				BufferedImage imageFusionImg = imageFusion.getSimpleAverageImageFusion();
+				getProcessedImagePanel().setImage(imageFusionImg);
+			}
+		});
+		
+		return menuItem;
+	}
+
+	private JMenuItem createSelectMaximumImageFusionMenu(){
+		JMenuItem menuItem = new JMenuItem(SELECT_MAXIMUM);
+		menuItem.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				SelectMaximumImageFusion imageFusion = new SelectMaximumImageFusion(getInitialImagePanel().getImage(), getProcessedImagePanel().getBufferedImage(), log);
+				BufferedImage imageFusionImg = imageFusion.getSelectMaximumImageFusion();
+				getProcessedImagePanel().setImage(imageFusionImg);
+			}
+		});
+		
+		return menuItem;
+	}
+	
+	private void openFileChooser() throws IOException{
 		JFileChooser fileChooser = new JFileChooser();
 		FileFilter jpegFilter = new FileNameExtensionFilter("JPEG File","jpg");
 		

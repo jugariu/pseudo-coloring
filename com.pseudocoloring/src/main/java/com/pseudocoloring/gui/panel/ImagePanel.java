@@ -2,8 +2,10 @@ package com.pseudocoloring.gui.panel;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -16,6 +18,7 @@ public class ImagePanel extends JPanel {
 	private JLabel label;
 	private ScrollableLogArea log;
 	private String imagePath;
+	private BufferedImage bufferedImage;
 
 	public ImagePanel(int xStart, int yStart, ScrollableLogArea log)
 			throws IOException {
@@ -38,17 +41,23 @@ public class ImagePanel extends JPanel {
 	public String getImage() {
 		return imagePath;
 	}
+	
+	public BufferedImage getBufferedImage(){
+		return bufferedImage;
+	}
 
 	public void setImage(BufferedImage image) {
 		this.setVisible(false);
+		this.bufferedImage = image;
 		ImageIcon icon = new ImageIcon(image);
 		label.setIcon(createImageIcon(icon));
 		this.setVisible(true);
 	}
 
-	public void setImage(String imagePath) {
+	public void setImage(String imagePath) throws IOException {
 		this.setVisible(false);
 		this.imagePath = imagePath;
+		this.bufferedImage = ImageIO.read(new File(imagePath));
 		ImageIcon icon = new ImageIcon(imagePath);
 		label.setIcon(createImageIcon(icon));
 		this.setVisible(true);
