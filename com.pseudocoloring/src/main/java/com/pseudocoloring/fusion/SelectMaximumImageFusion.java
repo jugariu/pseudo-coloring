@@ -25,7 +25,6 @@ public class SelectMaximumImageFusion {
 		log.setLoggedClass(SimpleAverageImageFusion.class.getName());
 
 		File file1 = null;
-		File file2 = null;
 		try {
 			file1 = new File(firstImagePath);
 			firstImage = ImageIO.read(file1);

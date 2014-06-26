@@ -3,7 +3,6 @@ package com.pseudocoloring.application;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import com.pseudocoloring.gui.frame.EqualizerFrame;
 import com.pseudocoloring.gui.frame.MainFrame;
 
 public class PseudocoloringApplication {
