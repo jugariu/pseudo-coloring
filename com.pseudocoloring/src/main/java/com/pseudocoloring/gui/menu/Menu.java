@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
@@ -223,10 +224,12 @@ public class Menu extends JMenuBar{
 		fileChooser.addChoosableFileFilter(jpegFilter);
 		
 		if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-			File file = new File(fileChooser.getSelectedFile().getPath());
-			getInitialImagePanel().setImage(file.getPath());
+			File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+			BufferedImage buffImage = ImageIO.read(file);
+			ImageIO.write(buffImage, "jpg", new File("C:/Pseudo-coloring/Initial_Images/"+file.getName().substring(0, file.getName().length()-4)+".jpg"));
+			getInitialImagePanel().setImage("C:/Pseudo-coloring/Initial_Images/"+file.getName().substring(0, file.getName().length()-4)+".jpg");
 			getProcessedImagePanel().reloadImagePanel();
-			log.info("Image " + file.getPath() + " was loaded.");
+			log.info("Image " + "C:/Pseudo-coloring/Initial_Images"+file.getName().substring(0, file.getName().length()-4) + " was loaded.");
 		}
 	}
 	

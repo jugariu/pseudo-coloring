@@ -50,7 +50,10 @@ public class MainFrame extends JFrame {
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 			File temp = new File("C:/Pseudo-coloring/"+timeStamp);
 			if(!temp.exists())
-				temp.mkdir();
+				temp.mkdirs();
+			File initImages = new File("C:/Pseudo-coloring/Initial_Images");
+			if(!initImages.exists())
+				initImages.mkdirs();
 			intermediatePanel.setTempFolderPath(temp.getPath());
 			
 			log.info("Application succesfully started.");

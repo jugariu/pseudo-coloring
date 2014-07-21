@@ -5,6 +5,18 @@
 	<artifactId>com.pseudocoloring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<repositories>
+		<repository>
+			<id>tomgibara</id>
+			<name>Tom Gibara Maven Repository</name>
+			<layout>default</layout>
+			<url>http://www.tomgibara.com/maven/repo/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 		<dependency>
 			<groupId>gov.nih.imagej</groupId>
@@ -16,7 +28,11 @@
 			<artifactId>jide-oss</artifactId>
 			<version>2.4.8</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.tomgibara.imageio</groupId>
+			<artifactId>imageio-tiff</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 </project>
